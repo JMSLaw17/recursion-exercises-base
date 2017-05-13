@@ -7,7 +7,48 @@ const _ = require('underscore'); // the real one! :)
 
 
 const stringify = function(obj) {
-  // your code goes here
+  var result = '';
+
+  if (obj === null) {
+    return 'null';
+  }
+
+  if (typeof obj === 'object') {
+    if (Array.isArray(obj)) {
+      result = '[';
+      for (let i = 0; i < obj.length; i++) {
+        result += stringify(obj[i]);
+        if (i < obj.length - 1) {
+          result += ',';
+        }
+      }
+      result += ']';
+      return result;
+    } else {
+      result = '{';
+      for (let j in obj) {
+        result += stringify(j) + ':' + stringify(obj[j]);
+      }
+      result += '}';
+      return result;
+    }
+  }
+
+  if (typeof obj === 'boolean') {
+    if (obj) {
+      return 'true';
+    } else {
+      return 'false';
+    }
+  }
+
+  if (typeof obj === 'number') {
+    return obj.toString();
+  }
+
+  if (typeof obj === 'string') {
+    return '"' + obj + '"';
+  }
 };
 
 module.exports = {
